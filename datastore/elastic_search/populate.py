@@ -261,10 +261,10 @@ def entity_data_update(connection, index_name, doc_type, entity_data, entity_nam
         **kwargs: Refer http://elasticsearch-py.readthedocs.io/en/master/helpers.html#elasticsearch.helpers.bulk
     """
     logger.debug('%s: +++ Started: external_api_entity_update() +++' % log_prefix)
-    logger.debug('%s: +++ Started: delete_entity_by_name() +++' % log_prefix)
-    delete_entity_by_name(connection=connection, index_name=index_name, doc_type=doc_type,
-                          entity_name=entity_name, logger=logger, **kwargs)
-    logger.debug('%s: +++ Completed: delete_entity_by_name() +++' % log_prefix)
+    # logger.debug('%s: +++ Started: delete_entity_by_name() +++' % log_prefix)
+    # delete_entity_by_name(connection=connection, index_name=index_name, doc_type=doc_type,
+    #                       entity_name=entity_name, logger=logger, **kwargs)
+    # logger.debug('%s: +++ Completed: delete_entity_by_name() +++' % log_prefix)
 
     if entity_data:
         dictionary_value = {}
@@ -437,3 +437,5 @@ def add_entity_data(connection, index_name, doc_type, entity_name, value_variant
 
     if str_query:
         helpers.bulk(connection, str_query, stats_only=True, **kwargs)
+
+# TODO: Implement method to add entities that actually works and don't overwrite data

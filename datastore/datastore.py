@@ -393,7 +393,10 @@ class DataStore(object):
 
         if self._engine == ELASTICSEARCH:
             self._check_doc_type_for_elasticsearch()
-            update_index = elastic_search.connect.get_current_live_index(self._store_name)
+            try:
+                update_index = elastic_search.connect.get_current_live_index(self._store_name)
+            except Exception:
+                update_index = self._store_name
             elastic_search.populate.entity_data_update(connection=self._client_or_connection,
                                                        index_name=update_index,
                                                        doc_type=self._connection_settings[

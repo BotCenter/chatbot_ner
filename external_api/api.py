@@ -1,4 +1,7 @@
 import json
+import os
+from os.path import dirname
+
 from django.http import HttpResponse
 from datastore.datastore import DataStore
 from datastore.exceptions import (DataStoreSettingsImproperlyConfiguredException, EngineNotImplementedException,
@@ -324,3 +327,12 @@ def entity_data_view(request, entity_name):
 
     else:
         raise APIHandlerException("{0} is not allowed.".format(request.method))
+
+
+@csrf_exempt
+def entity_data_list_view(request):
+    data_dir = dirname(dirname(os.getcwd())) + '/data/entity_data'
+    all_sources = os.listdir(data_dir)
+    all_sources.append('date.csv')
+    return HttpResponse(json.dumps(all_sources), content_type='application/json',
+                        status=200)

@@ -36,9 +36,11 @@ urlpatterns = [
 
     # Dictionary Read Write
     url(r'^entities/get_entity_word_variants', external_api.get_entity_word_variants),
+    url(r'^entities/get_entity_list', external_api.entity_data_list_view),
+    # TODO: fix this endpoint to just update
     url(r'^entities/update_dictionary', external_api.update_dictionary),
 
-    # Transfer Dictioanry
+    # Transfer Dictionary
     url(r'^entities/transfer_entities', external_api.transfer_entities),
 
     # Training Data Read Write
@@ -51,3 +53,5 @@ urlpatterns = [
     url(r'^entities/languages/v1/(?P<entity_name>.+)$', external_api.entity_language_view),
     url(r'^entities/data/v1/(?P<entity_name>.+)$', external_api.entity_data_view)
 ]
+
+# TODO: Implement endpoint to add entities that actually works and don't overwrite data
