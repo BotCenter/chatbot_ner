@@ -321,10 +321,16 @@ class TextDetector(BaseDetector):
         variants_to_values = collections.OrderedDict()
 
         text = u' '.join(TOKENIZER.tokenize(self.processed_text))
+
+        ner_logger.debug('Trying to get similar dictionary')
+
         _variants_to_values = self.db.get_similar_dictionary(entity_name=self.entity_name,
                                                              text=text,
                                                              fuzziness_threshold=self._fuzziness,
                                                              search_language_script=self._target_language_script)
+
+        ner_logger.debug('Finished get similar dictionary')
+
         for variant, value in iteritems(_variants_to_values):
             variant = variant.lower()
             if isinstance(variant, bytes):

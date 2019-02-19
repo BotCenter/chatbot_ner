@@ -4,6 +4,7 @@ import abc
 
 import six
 
+from chatbot_ner.config import ner_logger
 from language_utilities.constant import ENGLISH_LANG
 from language_utilities.constant import TRANSLATED_TEXT
 from language_utilities.utils import translate_text
@@ -143,7 +144,12 @@ class BaseDetector(object):
                 message = translation_output[TRANSLATED_TEXT] if translation_output['status'] else None
 
         text = structured_value if structured_value else message
+
+        ner_logger.debug('Trying to detect entity with text ' + text)
+
         entity_list, original_text_list = self.detect_entity(text=text)
+
+        ner_logger.debug('Finished detection of text ' + text)
 
         if structured_value:
             if entity_list:

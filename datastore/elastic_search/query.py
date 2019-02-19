@@ -7,6 +7,7 @@ import re
 import collections
 
 # Local imports
+from chatbot_ner.config import ner_logger
 from datastore import constants
 from external_api.constants import SENTENCE_LIST, ENTITY_LIST
 from language_utilities.constant import ENGLISH_LANG
@@ -285,8 +286,10 @@ def full_text_query(connection, index_name, doc_type, entity_name, sentence, fuz
     data = _generate_es_search_dictionary(entity_name, sentence, fuzziness_threshold,
                                           language_script=search_language_script)
     kwargs = dict(kwargs, body=data, doc_type=doc_type, size=constants.ELASTICSEARCH_SEARCH_SIZE, index=index_name)
+    ner_logger.debug('Running query search')
     results = _run_es_search(connection, **kwargs)
     results = _parse_es_search_results(results)
+    ner_logger.debug('Finished query search')
     return results
 
 
