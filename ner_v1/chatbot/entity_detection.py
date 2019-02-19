@@ -1,5 +1,6 @@
 from __future__ import absolute_import
 
+from chatbot_ner.config import ner_logger
 from language_utilities.constant import ENGLISH_LANG
 from ner_constants import (FROM_STRUCTURE_VALUE_VERIFIED, FROM_STRUCTURE_VALUE_NOT_VERIFIED, FROM_MESSAGE,
                            FROM_FALLBACK_VALUE, ORIGINAL_TEXT, ENTITY_VALUE, DETECTION_METHOD, ENTITY_VALUE_DICT_KEY)
@@ -199,11 +200,15 @@ def get_text(message, entity_name, structured_value, fallback_value, bot_message
     read_model_from_s3 = kwargs.get('read_model_from_s3', False)
     read_embeddings_from_remote_url = kwargs.get('read_embeddings_from_remote_url', False)
 
+    ner_logger.debug('Creating TextModelDetector for ' + entity_name)
+
     text_model_detector = TextModelDetector(entity_name=entity_name,
                                             language=language,
                                             live_crf_model_path=live_crf_model_path,
                                             read_model_from_s3=read_model_from_s3,
                                             read_embeddings_from_remote_url=read_embeddings_from_remote_url)
+
+    ner_logger.debug('Created detector for ' + entity_name)
 
     if fuzziness:
         fuzziness = parse_fuzziness_parameter(fuzziness)
@@ -213,10 +218,15 @@ def get_text(message, entity_name, structured_value, fallback_value, bot_message
         min_token_len_fuzziness = int(min_token_len_fuzziness)
         text_model_detector.set_min_token_size_for_levenshtein(min_size=min_token_len_fuzziness)
 
+    ner_logger.debug('Trying to detect on ' + entity_name)
+
     entity_output = text_model_detector.detect(message=message,
                                                structured_value=structured_value,
                                                fallback_value=fallback_value,
                                                bot_message=bot_message)
+
+    ner_logger.debug('Finished detecting for ' + entity_name)
+
 
     return entity_output
 
