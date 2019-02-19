@@ -145,11 +145,7 @@ class BaseDetector(object):
 
         text = structured_value if structured_value else message
 
-        ner_logger.debug('Trying to detect entity with text ' + text)
-
         entity_list, original_text_list = self.detect_entity(text=text)
-
-        ner_logger.debug('Finished detection of text ' + text)
 
         if structured_value:
             if entity_list:
