@@ -123,7 +123,7 @@ CHATBOT_NER_DATASTORE = {
         'retry_on_timeout': False,
         'max_retries': 1,
         'timeout': 20,
-        'request_timeout': 20,
+        'request_timeout': 5000,
 
         # Transfer Specific constants (ignore if only one elasticsearch is setup)
         # For detailed explanation datastore.elastic_search.transfer.py
