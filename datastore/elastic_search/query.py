@@ -288,8 +288,10 @@ def full_text_query(connection, index_name, doc_type, entity_name, sentence, fuz
     kwargs = dict(kwargs, body=data, doc_type=doc_type, size=constants.ELASTICSEARCH_SEARCH_SIZE, index=index_name)
     ner_logger.debug('Running query search')
     results = _run_es_search(connection, **kwargs)
-    results = _parse_es_search_results(results)
     ner_logger.debug('Finished query search')
+    ner_logger.debug('Running parse of query search')
+    results = _parse_es_search_results(results)
+    ner_logger.debug('Finished parse of query search')
     return results
 
 
@@ -310,7 +312,9 @@ def _run_es_search(connection, **kwargs):
     if not scroll:
         return connection.search(**kwargs)
 
+    ner_logger.debug('Executing connection.search')
     result = connection.search(scroll=scroll, **kwargs)
+    ner_logger.debug('Finished connection.search')
     scroll_id = result['_scroll_id']
     scroll_size = result['hits']['total']
     hit_list = result['hits']['hits']

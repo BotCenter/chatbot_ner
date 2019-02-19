@@ -269,7 +269,7 @@ class DataStore(object):
         if self._engine == ELASTICSEARCH:
             self._check_doc_type_for_elasticsearch()
             request_timeout = self._connection_settings.get('request_timeout', 20)
-            ner_logger.debug('Trying to full_text_query')
+            ner_logger.debug('Trying to full_text_query with conection ' + self._client_or_connection)
             results_dictionary = elastic_search.query.full_text_query(connection=self._client_or_connection,
                                                                       index_name=self._store_name,
                                                                       doc_type=self._connection_settings[
