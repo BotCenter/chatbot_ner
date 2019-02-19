@@ -329,10 +329,16 @@ def entity_data_view(request, entity_name):
         raise APIHandlerException("{0} is not allowed.".format(request.method))
 
 
-@csrf_exempt
 def entity_data_list_view(request):
-    data_dir = dirname(dirname(os.getcwd())) + '/data/entity_data'
-    all_sources = os.listdir(data_dir)
+    ner_logger.debug('Received request of entity list')
+    data_dir = os.getcwd() + '/data/entity_data'
+    ner_logger.debug('Looking on ' + data_dir)
+    try:
+        all_sources = os.listdir(data_dir)
+    except Exception as e:
+        ner_logger.debug(e)
+        all_sources = []
+
     all_sources.append('date.csv')
     return HttpResponse(json.dumps(all_sources), content_type='application/json',
                         status=200)
