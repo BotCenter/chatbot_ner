@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y wget build-essential curl nginx supervi
 
 WORKDIR /app
 
-
+COPY data/get_external_entities.py /app/
 COPY docker/install.sh initial_setup.py /app/
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
