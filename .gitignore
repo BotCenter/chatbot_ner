@@ -101,3 +101,6 @@ ENV/
 sftp-config.json
 .DS_Store
 logs/
+
+
+venv3

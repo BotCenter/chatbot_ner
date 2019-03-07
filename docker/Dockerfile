@@ -3,6 +3,7 @@
 FROM python:2.7.15
 
 RUN apt-get update && apt-get install -y wget build-essential curl nginx supervisor
+RUN apt-get install -y python3-pip
 
 WORKDIR /app
 
@@ -20,6 +21,8 @@ RUN mkdir -p ~/model_lib && \
 COPY requirements.txt /app/requirements.txt
 
 RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip3 install --no-cache-dir -r /app/requirements.txt
+
 
 # From start_server.sh
 
@@ -36,6 +39,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 #ENV DATE_MODEL_PATH=/root/models/models_live/date/crf/model.crf
 
 EXPOSE 8081
+EXPOSE 9200
 
 ADD . /app
 

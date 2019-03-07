@@ -1,7 +1,7 @@
 import logging.handlers
 import os
 
-import dotenv
+# import dotenv
 from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
@@ -48,12 +48,12 @@ handler.setFormatter(formatter)
 nlp_logger.addHandler(handler)
 nlp_logger.addHandler(handler_stdout)
 
-if os.path.exists(CONFIG_PATH):
-    dotenv.read_dotenv(CONFIG_PATH)
-else:
-    ner_logger.debug('Warning: no file named "config" found at %s. This is not a problem if your '
-                     'datastore(elasticsearch) connection settings are already available in the environment',
-                     CONFIG_PATH)
+# if os.path.exists(CONFIG_PATH):
+#     dotenv.read_dotenv(CONFIG_PATH)
+# else:
+#     ner_logger.debug('Warning: no file named "config" found at %s. This is not a problem if your '
+#                      'datastore(elasticsearch) connection settings are already available in the environment',
+#                      CONFIG_PATH)
 
 # TODO Consider prefixing everything config with NER_ because these names are in the environment and so are
 # TODO lot of others too which may conflict in name. Example user is already using some another instance of
@@ -111,6 +111,7 @@ if not GOOGLE_TRANSLATE_API_KEY:
     ner_logger.warning('Google Translate API key is null or not set')
     GOOGLE_TRANSLATE_API_KEY = ''
 
+print(ENGINE)
 CHATBOT_NER_DATASTORE = {
     'engine': ENGINE,
     'elasticsearch': {
@@ -165,12 +166,12 @@ elif ES_AWS_REGION and ES_AWS_SERVICE:
 else:
     ner_logger.warning('Elasticsearch: Some or all AWS settings missing from environment, this will skip AWS auth!')
 
-# Model Vars
-if os.path.exists(MODEL_CONFIG_PATH):
-    dotenv.read_dotenv(MODEL_CONFIG_PATH)
-else:
-    ner_logger.warning('Warning: no file named "model_config" found at %s. This is not a problem if you '
-                       'dont want to run NER with ML models', MODEL_CONFIG_PATH)
+# # Model Vars
+# if os.path.exists(MODEL_CONFIG_PATH):
+#     dotenv.read_dotenv(MODEL_CONFIG_PATH)
+# else:
+#     ner_logger.warning('Warning: no file named "model_config" found at %s. This is not a problem if you '
+#                        'dont want to run NER with ML models', MODEL_CONFIG_PATH)
 
 CITY_MODEL_TYPE = os.environ.get('CITY_MODEL_TYPE')
 CITY_MODEL_PATH = os.environ.get('CITY_MODEL_PATH')

@@ -308,7 +308,8 @@ def _run_es_search(connection, **kwargs):
     """
     scroll = kwargs.pop('scroll', False)
     if not scroll:
-        return connection.search(**kwargs)
+        # return connection.search(**kwargs)
+        return {}
 
     result = connection.search(scroll=scroll, **kwargs)
     scroll_id = result['_scroll_id']

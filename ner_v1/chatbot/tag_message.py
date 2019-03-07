@@ -1,9 +1,11 @@
+from tornado.gen import multi
+
 from ner_v1.chatbot.combine_detection_logic import combine_output_of_detection_logic_and_tag
 from ner_v1.chatbot.entity_detection import get_text, get_city, get_date, get_time, get_email, \
     get_phone_number, get_budget, get_number, get_pnr, get_shopping_size
 
 
-def run_ner(entities, message):
+async def run_ner(entities, message):
     """This function tags the message with the entity name and also identify the entity values.
     This functionality can be used when we have to identify entities from message without considering and
     structured_value and fallback_value.
@@ -79,13 +81,17 @@ def run_ner(entities, message):
 }
 
     """
+    tasks = [get_entity_function(entity=entity, message=message) for entity in entities]
+    responses = await multi(tasks)
+
     entity_data = {}
-    for entity in entities:
-        entity_data[entity] = get_entity_function(entity=entity, message=message)
+    for index, entity in enumerate(entities):
+        entity_data[entity] = responses[index]
+
     return combine_output_of_detection_logic_and_tag(entity_data, message)
 
 
-def get_entity_function(entity, message):
+async def get_entity_function(entity, message):
     """Calls the specific detection logic based on entity name. entity name plays crucial role in detecting textual
     entities (restaurant, cuisine, occupation, etc) but not while detecting phone number, email, etc.
 

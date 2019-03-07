@@ -130,6 +130,7 @@ def sort_original_text(original_text_list):
     """
     final_original_text = []
     sort_original_text_dict = defaultdict(list)
+    original_text_list = list(original_text_list)
     original_text_list.sort(key=lambda s: len(TOKENIZER.tokenize(s)), reverse=True)
     for original in original_text_list:
         length_of_token = len(TOKENIZER.tokenize(original))

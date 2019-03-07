@@ -207,7 +207,7 @@ class NameDetector(object):
             return [], []
 
         text = self.remove_emojis(text=self.text)
-        regex = re.compile(ur'[^\u0900-\u097F\s]+', re.U)
+        regex = re.compile(r'[^\u0900-\u097F\s]+', re.U)
         text = regex.sub(string=text, repl='')
 
         regex_detection_result = self.get_hindi_names_from_regex(text=text)
@@ -374,11 +374,11 @@ class NameDetector(object):
             >>[u'प्रतिक श्रीदत्त जयराओ']
 
         """
-        regex_list = [ur"(?:मुझे|हमें|मुझको|हमको|हमे)\s+(?:लोग)\s+([\u0900-\u097F\s]+)"
-                      ur"\s+(?:नाम\sसे)\s+(?:कहते|बुलाते|बुलाओ)",
-                      ur"(?:नाम|मैं|हम|मै)\s+([\u0900-\u097F\s]+)",
-                      ur"(?:मुझे|हमें|मुझको|हमको|हमे)\s+([\u0900-\u097F\s]+)(?:कहते|बुलाते|बुलाओ)",
-                      ur"\s*([\u0900-\u097F\s]+)(?:मुझे|मैं|मै)(?:कहते|बुलाते|बुलाओ)?"
+        regex_list = [r"(?:मुझे|हमें|मुझको|हमको|हमे)\s+(?:लोग)\s+([\u0900-\u097F\s]+)"
+                      r"\s+(?:नाम\sसे)\s+(?:कहते|बुलाते|बुलाओ)",
+                      r"(?:नाम|मैं|हम|मै)\s+([\u0900-\u097F\s]+)",
+                      r"(?:मुझे|हमें|मुझको|हमको|हमे)\s+([\u0900-\u097F\s]+)(?:कहते|बुलाते|बुलाओ)",
+                      r"\s*([\u0900-\u097F\s]+)(?:मुझे|मैं|मै)(?:कहते|बुलाते|बुलाओ)?"
                       ]
 
         for regex in regex_list:
@@ -430,7 +430,7 @@ class NameDetector(object):
         Returns:
             text (str): text with emojis replaced with ''
         """
-        emoji_pattern = re.compile(ur'[{0}]+'.format(''.join(EMOJI_RANGES.values())), re.UNICODE)
+        emoji_pattern = re.compile(r'[{0}]+'.format(''.join(EMOJI_RANGES.values())), re.UNICODE)
         text = emoji_pattern.sub(repl='', string=text)
         return text
 

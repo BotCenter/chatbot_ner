@@ -41,6 +41,8 @@ services:
       - "ES_JAVA_OPTS=-Xmx512m -Xms512m"
     networks:
      - chatbot_ner
+    ports:
+      - '9200:80'
 
 networks:
   chatbot_ner:

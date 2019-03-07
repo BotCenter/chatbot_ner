@@ -31,9 +31,10 @@ def connect(connection_url=None, host=None, port=None, user=None, password=None,
         connection = Elasticsearch(hosts=[connection_url], **kwargs)
     elif host and port:
         connection = Elasticsearch(hosts=[{'host': host, 'port': int(port)}], **kwargs)
+        # print(connection)
 
-    if connection and not connection.ping():
-        connection = None
+    # if connection and not connection.ping():
+    #     connection = None
 
     return connection
 
